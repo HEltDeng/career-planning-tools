@@ -9,3 +9,5 @@
 展示使用 Node.js 和 Codex 提供的 `@oai/artifact-tool` 2.8.106。在该运行环境中配置 `node_modules` 后运行 `node 构建/制作展示.mjs`。第三方运行库不复制进本仓库。
 
 最终产物统一写入本项目 `outputs/`；构建核对文件写入项目内的忽略目录。既有外部交付成品不移动、不覆盖。保持源码中本次使用的文本和素材，后续编辑从对应脚本开始。
+
+展示校验工具从当前用户已安装的 Codex presentations 工具版本自动查找，也可通过 `PRESENTATIONS_SKILL_DIR` 和 `PYTHON_EXECUTABLE` 显式指定；不依赖旧机器用户名或已经失效的固定缓存版本。

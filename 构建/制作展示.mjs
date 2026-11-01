@@ -1,15 +1,29 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import os from 'node:os';
 import { fileURLToPath,pathToFileURL } from 'node:url';
 import { Presentation,PresentationFile } from '@oai/artifact-tool';
 
 const DIR=path.dirname(fileURLToPath(import.meta.url));
-const ROOT=path.dirname(DIR),WORKSPACE=path.dirname(path.dirname(ROOT));
+const ROOT=path.dirname(DIR),WORKSPACE=ROOT;
 const OUT=path.join(ROOT,'outputs');
 const PERSON=path.join(OUT,'邓禾-202527010311-成长赛道');
 const PREVIEW=path.join(ROOT,'成品预览');
-const SKILL='/Users/heltdeng/.codex/plugins/cache/openai-primary-runtime/presentations/26.1020.11618/skills/presentations';
-const PY='/Users/heltdeng/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3';
+async function presentationTools() {
+ if (process.env.PRESENTATIONS_SKILL_DIR) return process.env.PRESENTATIONS_SKILL_DIR;
+ const cache=path.join(os.homedir(),'.codex/plugins/cache/openai-primary-runtime/presentations');
+ const versions=(await fs.readdir(cache)).sort((a,b)=>b.localeCompare(a,undefined,{numeric:true}));
+ for (const version of versions) {
+  const candidate=path.join(cache,version,'skills/presentations');
+  try { await fs.access(path.join(candidate,'container_tools/artifact_tool_utils.mjs')); return candidate; } catch {}
+ }
+ throw new Error('Set PRESENTATIONS_SKILL_DIR to the installed Codex presentations tools.');
+}
+const SKILL=await presentationTools();
+const PY=process.env.PYTHON_EXECUTABLE || path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3');
+if (!process.env.RUNTIME_NODE_MODULES && !process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES) {
+ process.env.RUNTIME_NODE_MODULES=await fs.realpath(path.join(ROOT,'node_modules'));
+}
 const FONT='Arial Unicode MS',INK='#172E3C',ACC='#C15C32',MUT='#526670',BG='#FAF8F3',LIGHT='#DDE7E7';
 const p=Presentation.create({slideSize:{width:1280,height:720}});
 p.theme.defaultFont=FONT;
