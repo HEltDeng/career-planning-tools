@@ -1,0 +1,12 @@
+{
+  "name": "career-planning-tools",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "presentation": "node 构建/制作展示.mjs"
+  },
+  "dependencies": {
+    "@oai/artifact-tool": "2.8.106"
+  }
+}

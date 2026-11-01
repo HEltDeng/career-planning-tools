@@ -1,0 +1,17 @@
+/*
+!/.gitignore
+!/README.md
+!/SOURCE_STATE.md
+!/requirements.in
+!/requirements.lock.txt
+!/package.json
+!/制作报告.py
+!/构建/
+/构建/*
+!/构建/制作展示.mjs
+!/素材/
+/素材/*
+!/素材/image.png
+!/素材/image3.png
+!/素材/image6.png
+!/素材/我的川农-原型首页.png
